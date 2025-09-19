@@ -1,133 +1,87 @@
-📦 Supply Chain Resilience AI
+Logistics Disruption Risk Prediction
+This project generates a synthetic logistics disruption dataset, extracts predictive features, builds a next-day disruption risk prediction model using XGBoost, and provides actionable recommendations and visualizations.
 
-An AI-powered tool that predicts supply chain risks and provides mitigation strategies using Google Gemini API.
-It considers factors like inventory, lead time, supplier reliability, and weather conditions to assess risks and suggest actionable insights.
+Features
+Synthetic daily logistics disruption risk data for one year.
 
-🚀 Features
+Predictive factors: shipment volume, weather risk, supplier reliability, port congestion, maintenance needs.
 
-Predicts future sales based on inventory and lead time.
+Feature engineering: lagged values and rolling risk average.
 
-Computes a risk score using supplier score and weather index.
+Time-series compatible train/test split and XGBoost regression modeling.
 
-Classifies risk into Low, Medium, High levels.
+Interactive next-day prediction using user input.
 
-Generates AI-driven mitigation strategies and explanations.
+Actionable recommendations based on predicted risk.
 
-Supports command-line arguments and interactive mode.
+Visualizations: disruption risk forecast and feature correlation heatmap.
 
-⚙️ Installation
-1. Clone Repository
-git clone https://github.com/yourusername/supply-chain-ai.git
-cd supply-chain-ai
+Requirements
+Python 3.x
 
-2. Create Virtual Environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate   # On Mac/Linux
-venv\Scripts\activate      # On Windows
+pandas
 
-3. Install Dependencies
-pip install -r requirements.txt
+numpy
 
+xgboost
 
-requirements.txt
+scikit-learn
 
-google-generativeai
-argparse
+matplotlib
 
-🔑 Setup Gemini API
+seaborn
 
-Get an API Key from Google AI Studio
-.
+Install dependencies via pip:
 
-Replace your key in the script:
+bash
+pip install pandas numpy xgboost scikit-learn matplotlib seaborn
+Usage
+Run the script
+The script creates a synthetic dataset (logistics_disruption_dataset.csv), trains an XGBoost model, and evaluates its performance.
 
-genai.configure(api_key="YOUR_API_KEY")
+Next-Day Prediction
+When prompted, enter values for the following features for next-day prediction:
 
-🖥️ Usage
-Run with CLI arguments
-python app.py --inventory 500 --lead_time 7 --supplier_score 0.8 --weather_index 0.6
+num_shipments (integer, daily shipment count)
 
-Run in interactive mode
-python app.py
+weather_risk (float, 0–1)
 
+supplier_reliability (float, 0.8–1.0)
 
-Example Input/Output:
+port_congestion (0 or 1)
 
-Enter Inventory: 500
-Enter Lead Time (days): 7
-Enter Supplier Score (0-1): 0.8
-Enter Weather Index (0-1): 0.6
+maintenance_needed (0 or 1)
 
-📊 Prediction Results
-Predicted Sales: 586.00
-Risk Score: 0.30
-Risk Level: Medium
-Mitigation Strategy: Diversify supplier base to reduce dependency risk.
+Lag and rolling features auto-filled from latest day
 
-AI Explanation:
-This strategy ensures resilience by minimizing reliance on a single supplier and reduces vulnerability to disruptions.
+Output
 
-✅ Test Cases
-Test Case 1: Low Risk
-python app.py --inventory 1000 --lead_time 2 --supplier_score 0.9 --weather_index 0.9
+Displays predicted disruption risk for the next day
 
+Provides tailored recommendations:
 
-Expected:
+High risk: rerouting, buffer inventory
 
-High predicted sales.
+Moderate risk: monitor logistics, inspect equipment
 
-Low risk score (< 0.3).
+Low risk: maintain operations
 
-Risk Level: Low.
+Additional suggestions for maintenance or congestion
 
-AI suggests monitoring + efficiency strategies.
+Visualizations
 
-Test Case 2: Medium Risk
-python app.py --inventory 500 --lead_time 7 --supplier_score 0.8 --weather_index 0.6
+Disruption risk forecast trend, with user prediction marked
 
+Feature correlation heatmap for model interpretability
 
-Expected:
+Files
+logistics_disruption_dataset.csv: Generated synthetic logistics data
 
-Predicted sales moderate.
+Script file: Contains all code for data generation, modeling, and visualization
 
-Risk Score around 0.3 - 0.6.
+Notes
+Lag/rolling features (disruption_risk_lag1, etc.) and rolling_avg7 auto-fill from last known values.
 
-Risk Level: Medium.
+The model is trained/tested without data shuffle to preserve time-series continuity.
 
-AI suggests supplier diversification or buffer stock.
-
-Test Case 3: High Risk
-python app.py --inventory 200 --lead_time 15 --supplier_score 0.4 --weather_index 0.5
-
-
-Expected:
-
-Predicted sales drop significantly.
-
-High risk score (> 0.6).
-
-Risk Level: High.
-
-AI suggests emergency sourcing, backup suppliers, or demand adjustments.
-
-📊 Risk Calculation Formula
-
-Predicted Sales = inventory * 1.2 - lead_time * 5
-
-Risk Score = (1 - supplier_score) * 0.5 + (1 - weather_index) * 0.5
-
-Risk Level =
-
-Low: < 0.3
-
-Medium: 0.3 – 0.6
-
-High: > 0.6
-
-📌 Roadmap
-
- Add visualizations for sales vs. risk.
-
- Extend with real supplier/weather APIs.
-
- Create a Flask web dashboard.
+Visualizations require a graphical environment to display.
